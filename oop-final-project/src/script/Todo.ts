@@ -25,7 +25,7 @@ export default class Todo {
         id: 1,
         title: "Todo1",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
         status: "todo",
         completed: false,
       },
@@ -33,7 +33,7 @@ export default class Todo {
         id: 2,
         title: "Todo2",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
         status: "inProgress",
         completed: false,
       },
@@ -41,7 +41,7 @@ export default class Todo {
         id: 3,
         title: "Todo3",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
         status: "done",
         completed: false,
       },
@@ -304,13 +304,11 @@ export default class Todo {
     items: Array<ITodoItem>,
     title: string
   ) {
-    const sectionInner = document.createElement("section");
-    sectionInner.classList.add("todo-status");
-    sectionInner.classList.add("todo-upcoming");
+    const sectionInner = document.createElement("div");
     const itemLengthText =
-      items.length === 0 || items.length === 1
-        ? `${items.length} Task`
-        : `${items.length} Tasks`;
+    items.length === 0 || items.length === 1
+      ? `${items.length} Task`
+      : `${items.length} Tasks`;
     sectionInner.innerHTML = `
       <div class="section-heading">
         <h3 class="section-title">${title}</h3>
@@ -318,7 +316,11 @@ export default class Todo {
           <span>
             ${itemLengthText}
           </span>
-          <button class="modal_btn">+</button>
+          <img
+            src="./images/plus.svg"
+            alt="plus-btn"
+            class="plus-btn modal_btn"
+          />
         </div>
       </div>
       <ul
@@ -326,9 +328,7 @@ export default class Todo {
         id="${title.toLowerCase().replace(" ", "-")}"
       >
       </ul>
-      <div class="add-area">
-        <img src="./images/plus.svg" alt="add-area" width="100px" />
-      </div>
+
     `;
     sectionInner
       .querySelector(".todo-list")
@@ -349,81 +349,10 @@ export default class Todo {
     if (ul) {
       items.forEach((todo) => {
         const li = document.createElement("li");
-        // li.innerHTML = `
-        //   <h3>${todo.title}</h3>
-        //   <span>${todo.description}</span>
-        //   <div class="btns">
-        //     <button class="btn-edit">Edit</button>
-        //     <button class="btn-delete">Delete</button>
-        //   </div>
-        // `
-        // li.innerHTML = `
-        //   <li
-        //     class="todo-item"
-        //     draggable="true"
-        //     ondragstart="drag(event)"
-        //     id="drag1"
-        //   >
-        //     <div class="todo-item-heading">
-        //       <h4 class="todo-item-title">${todo.title}</h4>
-        //       <div class="detail-btn-wrapper">
-        //         <img
-        //           src="https://dummyimage.com/600x400/471de0/fff"
-        //           alt="detail-btn"
-        //           class="detail-btn"
-        //           width="50px"
-        //         />
-        //         <ul class="detail-list">
-        //           <button class="edit-btn">
-        //             <img
-        //               src="./images/edit.svg"
-        //               alt="edit"
-        //               class="detail-btn-icon"
-        //               width="20px"
-        //             />
-        //             <span class="detail-btn-context">Edit</span>
-        //           </button>
-        //           <button class="edit-delete-btn">
-        //             <img
-        //               src="./images/edit.svg"
-        //               alt="edit"
-        //               class="detail-btn-icon"
-        //               width="20px"
-        //             />
-        //             <span class="detail-btn-context">Delete</span>
-        //           </button>
-        //           <button class="edit-delete-btn">
-        //             <img
-        //               src="./images/edit.svg"
-        //               alt="edit"
-        //               class="detail-btn-icon"
-        //               width="20px"
-        //             />
-        //             <span class="detail-btn-context">In Progress</span>
-        //           </button>
-        //           <button class="edit-btn">
-        //             <img
-        //               src="./images/edit.svg"
-        //               alt="edit"
-        //               class="detail-btn-icon"
-        //               width="20px"
-        //             />
-        //             <span class="detail-btn-context">Done</span>
-        //           </button>
-        //         </ul>
-        //       </div>
-        //     </div>
-        //     <div class="todo-item-contents">
-        //       ${todo.description}
-        //     </div>
-        //   </li>
-        // `;
+        li.className = "todo-item";
+        li.setAttribute("draggable", "true");
+        li.setAttribute("id", `todo-item-id${todo.id}`);
         li.innerHTML = `
-          <li
-            class="todo-item"
-            draggable="true"
-            id="todo-item-id${todo.id}"
-          >
             <div class="todo-item-heading">
               <div class="todo-title-wrapper">
                 <input type="checkbox" class="input-completed" ${todo.completed ? "checked" : ""}>
@@ -445,7 +374,6 @@ export default class Todo {
             <div class="todo-item-contents">
               ${todo.description}
             </div>
-          </li>
         `;
 
         // Add event listeners for edit and delete buttons and checkbox

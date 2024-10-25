@@ -13,16 +13,16 @@
 </TodoStatus> --><!-- <TodoStatus title="In Progress">
   <TodoItem title="Cooking" body="I gonna cook curry" />
 </TodoStatus> -->
-<h1>Task List</h1>
+<h1 class="todo-board-title">Task List</h1>
 
 <div id="createModal-container"></div>
 
 <div id="editModal-container"></div>
 
 <div class="todo-board-contents">
-  <div id="todo-container"></div>
-  <div id="in-progress-container"></div>
-  <div id="done-container"></div>
+  <div id="todo-container" class="todo-status todo-upcoming"></div>
+  <div id="in-progress-container" class="todo-status todo-inProgress"></div>
+  <div id="done-container" class="todo-status todo-done"></div>
 </div>
 
 <script src="../script/Todo.ts"></script>
@@ -31,20 +31,27 @@
   body {
     background-color: #d9e8f8;
   }
-
+  .todo-board-title {
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 20px 0 30px 30px;
+  }
   .section-title {
     margin: 0;
+    color: #f3f3f3;
+    font-size: 2rem;
   }
   .todo-board-contents {
-    width: 100%;
+    margin: 0 auto;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+    justify-content: space-around;
+    gap: 30px;
   }
   .todo-status {
-    width: 100%;
+    width: 80%;
     background-color: #5e94ff;
     padding: 20px;
     border-radius: 10px;
@@ -78,13 +85,13 @@
     font-size: 1rem;
   }
   .plus-btn {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
   }
   .todo-list {
     width: 100%;
     /* height: 0; */
-    padding: 50px 0 0 0;
+    padding: 0px 0 0 0;
     overflow: hidden;
   }
   /* .todo-list:last-child{
@@ -93,7 +100,7 @@
   .todo-item {
     background-color: #9abcff;
     list-style: none;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 20px;
     border-radius: 10px;
     cursor: grab;
@@ -112,7 +119,7 @@
     gap: 4px;
   }
   .todo-item-title {
-    font-size: 1rem;
+    font-size: 1.5rem;
     margin: 0;
   }
   .detail-btn {
@@ -120,10 +127,13 @@
     height: 20px;
   }
   .todo-item-contents {
-    font-size: 0.5rem;
+    font-size: 1rem;
   }
   /* ----- detail-btn ----- */
 
+  .btn-delete {
+    margin-left: 15px;
+  }
   .detail-btn-wrapper {
     position: relative;
   }
@@ -168,15 +178,22 @@
   #done-container {
     width: 100%;
   }
+  #done-container {
+    margin-bottom: 30px;
+    width: 100%;
+  }
   .todo-btn-wrapper {
     display: flex;
   }
 
   @media (min-width: 1024px) {
     .todo-board-contents {
+      width: 100%;
       flex-direction: row;
       align-items: start;
-      gap: 8px;
+      justify-content: space-around;
+      gap: 7px;
+      margin-bottom: 30px;
     }
     .todo-status {
       /* width: 30%; */
@@ -191,7 +208,7 @@
     #todo-container,
     #in-progress-container,
     #done-container {
-      width: 32%;
+      width: 26%;
     }
   }
 
