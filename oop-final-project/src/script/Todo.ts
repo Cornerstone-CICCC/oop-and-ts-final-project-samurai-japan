@@ -16,6 +16,7 @@ export default class Todo {
   descriptionInput: HTMLInputElement | null = null;
   searchbar: HTMLInputElement | null = null;
   createModalContainer: HTMLDivElement | null = null;
+  editModalContainer: HTMLDivElement | null = null;
   modalBtn: HTMLButtonElement | null = null;
 
   constructor() {
@@ -52,6 +53,7 @@ export default class Todo {
     this.createModalContainer = document.querySelector(
       "#createModal-container"
     );
+    this.editModalContainer = document.querySelector("#editModal-container");
 
     // this.todoList = document.querySelector("#todo-list");
 
@@ -70,7 +72,7 @@ export default class Todo {
         title,
         description,
         status,
-        completed: false
+        completed: false,
       });
 
       if (this.titleInput) this.titleInput.value = "";
@@ -81,13 +83,54 @@ export default class Todo {
   }
 
   editTodo(id: number) {
-    // Fetch one object where todo id = id
-    const todoToEdit = this.todos.find((todo) => todo.id === id);
-    if (todoToEdit) {
-      const newDescription = prompt("Edit To-Do: ", todoToEdit.description);
-      if (newDescription) {
-        todoToEdit.description = newDescription;
-        this.render();
+    if (this.editModalContainer) {
+      // Fetch one object where todo id = id
+
+      const todoToEdit = this.todos.find((todo) => todo.id === id);
+
+      if (todoToEdit) {
+        const editModalElement = document.createElement("div");
+        editModalElement.classList.add("editModal_div");
+        editModalElement.innerHTML = `
+        <div class="modal_background">
+          <div class="editModal-description">
+            <button class="close-btn">&times;</button>
+
+            <form class="modal-input">
+              <label for="title-input">Title</label></br>
+              <input type="text" name="title" id="title-input" required value="${todoToEdit?.title}" /></br>
+              <label for="description-input">Description</label></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" required />${todoToEdit?.description}</textarea></br>
+              <button id="todo-edit-btn">Update</button>
+            </div>
+          </div>
+        </div>
+      `;
+        editModalElement
+          .querySelector("#todo-edit-btn")
+          ?.addEventListener("click", (e) => {
+            e.preventDefault();
+            todoToEdit.title = (
+              editModalElement.querySelector("#title-input") as HTMLInputElement
+            ).value;
+            todoToEdit.description = (
+              editModalElement.querySelector(
+                "#description-input"
+              ) as HTMLInputElement
+            ).value;
+            this.closeModal();
+            this.render();
+          });
+        editModalElement
+          .querySelector(".close-btn")
+          ?.addEventListener("click", () => this.closeModal());
+        editModalElement
+          .querySelector(".modal_background")
+          ?.addEventListener("click", (e) => {
+            if ((e.target as HTMLElement).className === "modal_background")
+              this.closeModal();
+          });
+        this.editModalContainer.appendChild(editModalElement);
       }
     }
   }
@@ -96,9 +139,9 @@ export default class Todo {
     // Fetch one object where todo id = id
     const todoToEdit = this.todos.find((todo) => todo.id === id);
     if (todoToEdit) {
-      todoToEdit.completed = !todoToEdit.completed
+      todoToEdit.completed = !todoToEdit.completed;
       if (todoToEdit.completed) {
-        todoToEdit.status = 'done'
+        todoToEdit.status = "done";
       }
       this.render();
     }
@@ -151,7 +194,7 @@ export default class Todo {
 
         target.appendChild(draggedElement);
       }
-      this.render()
+      this.render();
     }
   }
 
@@ -181,7 +224,8 @@ export default class Todo {
       createModalElement
         .querySelector(".modal_background")
         ?.addEventListener("click", (e) => {
-          if ((e.target as HTMLElement).className === "modal_background") this.closeModal();
+          if ((e.target as HTMLElement).className === "modal_background")
+            this.closeModal();
           // console.log(e.target.className);
 
           // if (e.target.closest())
@@ -217,6 +261,7 @@ export default class Todo {
 
   closeModal() {
     if (this.createModalContainer) this.createModalContainer.innerHTML = "";
+    if (this.editModalContainer) this.editModalContainer.innerHTML = "";
   }
 
   render() {
@@ -262,7 +307,10 @@ export default class Todo {
     const sectionInner = document.createElement("section");
     sectionInner.classList.add("todo-status");
     sectionInner.classList.add("todo-upcoming");
-    const itemLengthText = items.length === 0 || items.length === 1 ? `${items.length} Task` : `${items.length} Tasks`
+    const itemLengthText =
+      items.length === 0 || items.length === 1
+        ? `${items.length} Task`
+        : `${items.length} Tasks`;
     sectionInner.innerHTML = `
       <div class="section-heading">
         <h3 class="section-title">${title}</h3>
@@ -378,7 +426,7 @@ export default class Todo {
           >
             <div class="todo-item-heading">
               <div class="todo-title-wrapper">
-                <input type="checkbox" class="input-completed" ${todo.completed ? 'checked' : ''}>
+                <input type="checkbox" class="input-completed" ${todo.completed ? "checked" : ""}>
                 <h4 class="todo-item-title">${todo.title}</h4>
               </div>
               <div class="todo-btn-wrapper">
