@@ -5,7 +5,7 @@
 <!--
 <ul id="todo-list"></ul>
 
- {
+  {
   TODOSTATUS.map((status) => {
     <TodoStatus title={status} />;
   })
@@ -185,7 +185,21 @@
   .todo-btn-wrapper {
     display: flex;
   }
-
+  /* -----the number of tasks----- */
+  .section-heading-right {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 15px;
+    .task-counter {
+      color: #f3f3f3;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .task-counter::first-letter {
+      font-size: 2rem;
+    }
+  }
   @media (min-width: 1024px) {
     .todo-board-contents {
       width: 100%;
@@ -290,7 +304,6 @@
         }
       }
     }
-    
   }
 
   #editModal-container {
@@ -371,6 +384,5 @@
         }
       }
     }
-    
   }
 </style>
