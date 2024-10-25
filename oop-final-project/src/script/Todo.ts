@@ -3,6 +3,7 @@ export interface ITodoItem {
   title: string;
   description: string;
   status: string; // "todo", "inProgress", "done"
+  completed: boolean;
 }
 
 export default class Todo {
@@ -26,6 +27,7 @@ export default class Todo {
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
         status: "todo",
+        completed: false,
       },
       {
         id: 2,
@@ -33,6 +35,7 @@ export default class Todo {
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
         status: "inProgress",
+        completed: false,
       },
       {
         id: 3,
@@ -40,6 +43,7 @@ export default class Todo {
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum, ipsum blanditiis debitis accusamus? Quasi perspiciatis et repellat?",
         status: "done",
+        completed: false,
       },
     ];
 
@@ -68,6 +72,7 @@ export default class Todo {
         title,
         description,
         status,
+        completed: false,
       });
 
       if (this.titleInput) this.titleInput.value = "";
@@ -83,9 +88,10 @@ export default class Todo {
 
       const todoToEdit = this.todos.find((todo) => todo.id === id);
 
-      const editModalElement = document.createElement("div");
-      editModalElement.classList.add("editModal_div");
-      editModalElement.innerHTML = `
+      if (todoToEdit) {
+        const editModalElement = document.createElement("div");
+        editModalElement.classList.add("editModal_div");
+        editModalElement.innerHTML = `
         <div class="modal_background">
           <div class="editModal-description">
             <button class="close-btn">&times;</button>
@@ -100,26 +106,44 @@ export default class Todo {
           </div>
         </div>
       `;
-      editModalElement
-        .querySelector("#todo-edit-btn")
-        ?.addEventListener("click", (e) => {
-          e.preventDefault();
-          todoToEdit.title =
-            editModalElement.querySelector("#title-input")?.value;
-          todoToEdit.description =
-            editModalElement.querySelector("#description-input")?.value;
-          this.closeModal();
-          this.render();
-        });
-      editModalElement
-        .querySelector(".close-btn")
-        ?.addEventListener("click", () => this.closeModal());
-      editModalElement
-        .querySelector(".modal_background")
-        ?.addEventListener("click", (e) => {
-          if (e.target?.className === "modal_background") this.closeModal();
-        });
-      this.editModalContainer.appendChild(editModalElement);
+        editModalElement
+          .querySelector("#todo-edit-btn")
+          ?.addEventListener("click", (e) => {
+            e.preventDefault();
+            todoToEdit.title = (
+              editModalElement.querySelector("#title-input") as HTMLInputElement
+            ).value;
+            todoToEdit.description = (
+              editModalElement.querySelector(
+                "#description-input"
+              ) as HTMLInputElement
+            ).value;
+            this.closeModal();
+            this.render();
+          });
+        editModalElement
+          .querySelector(".close-btn")
+          ?.addEventListener("click", () => this.closeModal());
+        editModalElement
+          .querySelector(".modal_background")
+          ?.addEventListener("click", (e) => {
+            if ((e.target as HTMLElement).className === "modal_background")
+              this.closeModal();
+          });
+        this.editModalContainer.appendChild(editModalElement);
+      }
+    }
+  }
+
+  editTodoCompleted(id: number) {
+    // Fetch one object where todo id = id
+    const todoToEdit = this.todos.find((todo) => todo.id === id);
+    if (todoToEdit) {
+      todoToEdit.completed = !todoToEdit.completed;
+      if (todoToEdit.completed) {
+        todoToEdit.status = "done";
+      }
+      this.render();
     }
   }
 
@@ -170,6 +194,7 @@ export default class Todo {
 
         target.appendChild(draggedElement);
       }
+      this.render();
     }
   }
 
@@ -199,7 +224,13 @@ export default class Todo {
       createModalElement
         .querySelector(".modal_background")
         ?.addEventListener("click", (e) => {
-          if (e.target?.className === "modal_background") this.closeModal();
+          if ((e.target as HTMLElement).className === "modal_background")
+            this.closeModal();
+          // console.log(e.target.className);
+
+          // if (e.target.closest())
+          // e.stopPropagation();
+          // this.closeModl();
         });
       const status = createModalElement
         .querySelector("#todo-add-btn")
@@ -276,10 +307,19 @@ export default class Todo {
     const sectionInner = document.createElement("section");
     sectionInner.classList.add("todo-status");
     sectionInner.classList.add("todo-upcoming");
+    const itemLengthText =
+      items.length === 0 || items.length === 1
+        ? `${items.length} Task`
+        : `${items.length} Tasks`;
     sectionInner.innerHTML = `
       <div class="section-heading">
         <h3 class="section-title">${title}</h3>
-        <button class="modal_btn">+</button>
+        <div class="section-heading-right">
+          <span>
+            ${itemLengthText}
+          </span>
+          <button class="modal_btn">+</button>
+        </div>
       </div>
       <ul
         class="todo-list todo-list-upcoming"
@@ -385,7 +425,10 @@ export default class Todo {
             id="todo-item-id${todo.id}"
           >
             <div class="todo-item-heading">
-              <h4 class="todo-item-title">${todo.title}</h4>
+              <div class="todo-title-wrapper">
+                <input type="checkbox" class="input-completed" ${todo.completed ? "checked" : ""}>
+                <h4 class="todo-item-title">${todo.title}</h4>
+              </div>
               <div class="todo-btn-wrapper">
                 <img
                   src="/images/edit.svg"
@@ -405,13 +448,16 @@ export default class Todo {
           </li>
         `;
 
-        // Add event listeners for edit and delete buttons
+        // Add event listeners for edit and delete buttons and checkbox
         li
           .querySelector(".btn-edit")
           ?.addEventListener("click", () => this.editTodo(todo.id));
         li
           .querySelector(".btn-delete")
           ?.addEventListener("click", () => this.deleteTodo(todo.id));
+        li
+          .querySelector(".input-completed")
+          ?.addEventListener("click", () => this.editTodoCompleted(todo.id));
         // Add dragstart event listener for todo item
         li
           .querySelector(".todo-item")
