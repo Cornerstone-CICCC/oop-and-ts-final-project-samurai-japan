@@ -201,7 +201,9 @@ export default class Todo {
       createModalElement.innerHTML = `
         <div class="modal_background">
           <div class="createModal-description">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">
+              <img src="../../public/images/cross.svg" alt="cross">
+            </button>
 
             <form class="modal-input">
               <label for="title-input">Title</label></br>

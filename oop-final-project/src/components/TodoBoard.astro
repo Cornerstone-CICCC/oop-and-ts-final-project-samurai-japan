@@ -87,11 +87,15 @@
   .plus-btn {
     width: 35px;
     height: 35px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   .todo-list {
     width: 100%;
     /* height: 0; */
-    padding: 0px 0 0 0;
+    padding: 0 0 50px 0;
     overflow: hidden;
   }
   /* .todo-list:last-child{
@@ -215,7 +219,6 @@
     .todo-list {
       /* display: none; */
       height: auto;
-      padding: 0 0 50px 0;
       overflow: hidden;
       /* transition: height .3s ease; */
     }
@@ -255,6 +258,18 @@
           height: 30px;
           background-color: #9abcff;
           border-radius: 50%;
+
+          img {
+            width: 25px;
+            height: 25px;
+            transform: translateX(-5px)
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: #6092f6;
+            transition: all 0.3s;
+          }
         }
 
         .modal-input {
@@ -300,6 +315,12 @@
             color: #fff;
             font-size: 20px;
             right: 4rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #6092f6;
+              transition: all 0.3s;
+            }
           }
         }
       }
