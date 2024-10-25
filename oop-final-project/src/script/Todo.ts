@@ -15,6 +15,7 @@ export default class Todo {
   descriptionInput: HTMLInputElement | null = null;
   searchbar: HTMLInputElement | null = null;
   createModalContainer: HTMLDivElement | null = null;
+  editModalContainer: HTMLDivElement | null = null;
   modalBtn: HTMLButtonElement | null = null;
 
   constructor() {
@@ -48,6 +49,7 @@ export default class Todo {
     this.createModalContainer = document.querySelector(
       "#createModal-container"
     );
+    this.editModalContainer = document.querySelector("#editModal-container");
 
     // this.todoList = document.querySelector("#todo-list");
 
@@ -76,14 +78,48 @@ export default class Todo {
   }
 
   editTodo(id: number) {
-    // Fetch one object where todo id = id
-    const todoToEdit = this.todos.find((todo) => todo.id === id);
-    if (todoToEdit) {
-      const newDescription = prompt("Edit To-Do: ", todoToEdit.description);
-      if (newDescription) {
-        todoToEdit.description = newDescription;
-        this.render();
-      }
+    if (this.editModalContainer) {
+      // Fetch one object where todo id = id
+
+      const todoToEdit = this.todos.find((todo) => todo.id === id);
+
+      const editModalElement = document.createElement("div");
+      editModalElement.classList.add("editModal_div");
+      editModalElement.innerHTML = `
+        <div class="modal_background">
+          <div class="editModal-description">
+            <button class="close-btn">&times;</button>
+
+            <form class="modal-input">
+              <label for="title-input">Title</label></br>
+              <input type="text" name="title" id="title-input" required value="${todoToEdit?.title}" /></br>
+              <label for="description-input">Description</label></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" required />${todoToEdit?.description}</textarea></br>
+              <button id="todo-edit-btn">Update</button>
+            </div>
+          </div>
+        </div>
+      `;
+      editModalElement
+        .querySelector("#todo-edit-btn")
+        ?.addEventListener("click", (e) => {
+          e.preventDefault();
+          todoToEdit.title =
+            editModalElement.querySelector("#title-input")?.value;
+          todoToEdit.description =
+            editModalElement.querySelector("#description-input")?.value;
+          this.closeModal();
+          this.render();
+        });
+      editModalElement
+        .querySelector(".close-btn")
+        ?.addEventListener("click", () => this.closeModal());
+      editModalElement
+        .querySelector(".modal_background")
+        ?.addEventListener("click", (e) => {
+          if (e.target?.className === "modal_background") this.closeModal();
+        });
+      this.editModalContainer.appendChild(editModalElement);
     }
   }
 
@@ -163,12 +199,7 @@ export default class Todo {
       createModalElement
         .querySelector(".modal_background")
         ?.addEventListener("click", (e) => {
-          if (e.target.className === "modal_background") this.closeModal();
-          // console.log(e.target.className);
-
-          // if (e.target.closest())
-          // e.stopPropagation();
-          // this.closeModl();
+          if (e.target?.className === "modal_background") this.closeModal();
         });
       const status = createModalElement
         .querySelector("#todo-add-btn")
@@ -199,6 +230,7 @@ export default class Todo {
 
   closeModal() {
     if (this.createModalContainer) this.createModalContainer.innerHTML = "";
+    if (this.editModalContainer) this.editModalContainer.innerHTML = "";
   }
 
   render() {
