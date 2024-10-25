@@ -55,8 +55,6 @@ export default class Todo {
     );
     this.editModalContainer = document.querySelector("#editModal-container");
 
-    // this.todoList = document.querySelector("#todo-list");
-
     this.searchbar?.addEventListener("keyup", () => this.updateFilterLetter());
     this.render();
   }
@@ -85,9 +83,7 @@ export default class Todo {
   editTodo(id: number) {
     if (this.editModalContainer) {
       // Fetch one object where todo id = id
-
       const todoToEdit = this.todos.find((todo) => todo.id === id);
-
       if (todoToEdit) {
         const editModalElement = document.createElement("div");
         editModalElement.classList.add("editModal_div");
@@ -226,11 +222,6 @@ export default class Todo {
         ?.addEventListener("click", (e) => {
           if ((e.target as HTMLElement).className === "modal_background")
             this.closeModal();
-          // console.log(e.target.className);
-
-          // if (e.target.closest())
-          // e.stopPropagation();
-          // this.closeModl();
         });
       const status = createModalElement
         .querySelector("#todo-add-btn")
@@ -386,9 +377,9 @@ export default class Todo {
         li
           .querySelector(".input-completed")
           ?.addEventListener("click", () => this.editTodoCompleted(todo.id));
+
         // Add dragstart event listener for todo item
         li
-          .querySelector(".todo-item")
           ?.addEventListener("dragstart", (event) =>
             this.drag(event as DragEvent)
           );
