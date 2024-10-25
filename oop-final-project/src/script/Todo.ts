@@ -297,14 +297,14 @@ export default class Todo {
   ) {
     const sectionInner = document.createElement("div");
     const itemLengthText =
-    items.length === 0 || items.length === 1
-      ? `${items.length} Task`
-      : `${items.length} Tasks`;
+      items.length === 0 || items.length === 1
+        ? `${items.length} Task`
+        : `${items.length} Tasks`;
     sectionInner.innerHTML = `
       <div class="section-heading">
         <h3 class="section-title">${title}</h3>
         <div class="section-heading-right">
-          <span>
+          <span class="task-counter">
             ${itemLengthText}
           </span>
           <img
@@ -379,10 +379,9 @@ export default class Todo {
           ?.addEventListener("click", () => this.editTodoCompleted(todo.id));
 
         // Add dragstart event listener for todo item
-        li
-          ?.addEventListener("dragstart", (event) =>
-            this.drag(event as DragEvent)
-          );
+        li?.addEventListener("dragstart", (event) =>
+          this.drag(event as DragEvent)
+        );
 
         ul.appendChild(li);
       });
