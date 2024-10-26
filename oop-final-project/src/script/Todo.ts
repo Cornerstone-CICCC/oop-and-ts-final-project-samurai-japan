@@ -94,9 +94,9 @@ export default class Todo {
 
             <form class="modal-input">
               <label for="title-input">Title</label></br>
-              <input type="text" name="title" id="title-input" required value="${todoToEdit?.title}" /></br>
+              <input type="text" name="title" id="title-input" required value="${todoToEdit?.title}" maxlength="10" /></br>
               <label for="description-input">Description</label></br>
-              <textarea type="text" name="description" id="description-input" rows="5" cols="40" required />${todoToEdit?.description}</textarea></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="20" required />${todoToEdit?.description}</textarea></br>
               <button id="todo-edit-btn">Update</button>
             </div>
           </div>
@@ -201,13 +201,15 @@ export default class Todo {
       createModalElement.innerHTML = `
         <div class="modal_background">
           <div class="createModal-description">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn">
+              <img src="../../public/images/cross.svg" alt="cross">
+            </button>
 
             <form class="modal-input">
               <label for="title-input">Title</label></br>
-              <input type="text" name="title" id="title-input" required /></br>
+              <input type="text" name="title" id="title-input" maxlength="10" required /></br>
               <label for="description-input">Description</label></br>
-              <textarea type="text" name="description" id="description-input" rows="5" cols="40" required /></textarea></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="20" required /></textarea></br>
               <button id="todo-add-btn" class="${title}">Add</button>
             </div>
           </div>
@@ -258,7 +260,8 @@ export default class Todo {
   render() {
     const filteredTodos = this.todos.filter((todo) =>
       Todo.filterLetter
-        ? todo.title.toLowerCase().includes(Todo.filterLetter)
+        ? todo.title.toLowerCase().includes(Todo.filterLetter) ||
+          todo.description.toLowerCase().includes(Todo.filterLetter)
         : true
     );
 
@@ -346,10 +349,10 @@ export default class Todo {
         li.innerHTML = `
             <div class="todo-item-heading">
               <div class="todo-title-wrapper">
-                <input type="checkbox" class="input-completed" ${todo.completed ? "checked" : ""}>
                 <h4 class="todo-item-title">${todo.title}</h4>
               </div>
               <div class="todo-btn-wrapper">
+                <input type="checkbox" class="input-completed" ${todo.completed ? "checked" : ""}>
                 <img
                   src="/images/edit.svg"
                   alt="edit button"

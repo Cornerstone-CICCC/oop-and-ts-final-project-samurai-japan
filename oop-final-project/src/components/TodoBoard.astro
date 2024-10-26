@@ -35,6 +35,7 @@
     font-size: 2.5rem;
     margin: 0;
     padding: 20px 0 30px 30px;
+    font-family: "Irish Grover", system-ui;
   }
   .section-title {
     margin: 0;
@@ -70,6 +71,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    font-family: "Irish Grover", system-ui;
   }
   .section-title {
     font-size: 1.5rem;
@@ -87,11 +89,15 @@
   .plus-btn {
     width: 35px;
     height: 35px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   .todo-list {
     width: 100%;
     /* height: 0; */
-    padding: 0px 0 0 0;
+    padding: 0 0 50px 0;
     overflow: hidden;
   }
   /* .todo-list:last-child{
@@ -183,6 +189,12 @@
     width: 100%;
   }
   .todo-btn-wrapper {
+    .input-completed {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+    }
+
     display: flex;
   }
   /* -----the number of tasks----- */
@@ -215,7 +227,6 @@
     .todo-list {
       /* display: none; */
       height: auto;
-      padding: 0 0 50px 0;
       overflow: hidden;
       /* transition: height .3s ease; */
     }
@@ -255,6 +266,18 @@
           height: 30px;
           background-color: #9abcff;
           border-radius: 50%;
+
+          img {
+            width: 25px;
+            height: 25px;
+            transform: translateX(-5px)
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: #6092f6;
+            transition: all 0.3s;
+          }
         }
 
         .modal-input {
@@ -300,6 +323,12 @@
             color: #fff;
             font-size: 20px;
             right: 4rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #6092f6;
+              transition: all 0.3s;
+            }
           }
         }
       }
