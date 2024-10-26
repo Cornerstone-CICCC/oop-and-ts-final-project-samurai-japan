@@ -1,0 +1,88 @@
+<header>
+  <div class="header-title">
+    <a class="title-wrapper" href="/">
+      <h1>Samurai Kanban</h1>
+      <img
+        src="../../public/images/main-icon.svg"
+        alt="main icon"
+        width="50px"
+      />
+    </a>
+  </div>
+  <div class="search-box">
+    <img src="../../public/images/search.svg" alt="search icon" width="40px" />
+    <input type="text" class="search-input" id="search-input" />
+  </div>
+</header>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  header {
+    width: 100%;
+    height: 90px;
+    background-color: #b9cefb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  .header-title {
+    /* background-color: aqua; */
+    font-family: "Irish Grover", system-ui;
+  }
+  .title-wrapper {
+    display: flex;
+    text-decoration: none;
+    color: black;
+  }
+  .search-box {
+    width: 45%;
+    height: auto;
+    /* background-color: blue; */
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding-left: 20px;
+  }
+
+  .search-input {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 80%;
+    height: 60px;
+    border: none;
+    border-radius: 20px;
+    margin-left: 30px;
+    font-size: 2rem;
+  }
+  @media (max-width: 800px) {
+    header {
+      height: 140px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .title-wrapper {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+    .search-box {
+      width: 100%;
+    }
+  }
+</style>

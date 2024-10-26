@@ -1,0 +1,16 @@
+---
+import TodoItem from "../components/TodoItem.astro";
+import type { ITodoItem } from "../script/Todo";
+
+interface Props {
+  title: string;
+  todos: Array<ITodoItem>;
+}
+
+const { title, todos } = Astro.props;
+---
+
+<section>
+  <h2>{title}</h2>
+  {todos.map((todo: any) => <TodoItem key={todo.id} todo={todo} />)}
+</section>
