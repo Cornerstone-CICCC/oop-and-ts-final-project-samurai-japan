@@ -7,7 +7,7 @@ export interface ITodoItem {
 }
 
 export default class Todo {
-  static idCounter = 4;
+  static idCounter = 1;
   static filterLetter = "";
   todos: Array<ITodoItem>;
   addBtn: HTMLButtonElement | null = null;
@@ -20,32 +20,7 @@ export default class Todo {
   modalBtn: HTMLButtonElement | null = null;
 
   constructor() {
-    this.todos = [
-      {
-        id: 1,
-        title: "Todo1",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
-        status: "todo",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Todo2",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
-        status: "inProgress",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Todo3",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius distinctio, ducimus sed quisquam quaerat, numquam reprehenderit nulla dolores eveniet qui tenetur laborum?",
-        status: "done",
-        completed: false,
-      },
-    ];
+    this.todos = [];
 
     this.addBtn = document.querySelector("#todo-add-btn");
     this.searchbar = document.querySelector("#search-input");
