@@ -1,18 +1,3 @@
----
-
----
-
-<!--
-<ul id="todo-list"></ul>
-
-  {
-  TODOSTATUS.map((status) => {
-    <TodoStatus title={status} />;
-  })
-} --><!-- <TodoStatus title="Todo" todos={todoList} /> --><!-- <TodoItem title="Reading" body="Today's goal is reading 100 pages" />
-</TodoStatus> --><!-- <TodoStatus title="In Progress">
-  <TodoItem title="Cooking" body="I gonna cook curry" />
-</TodoStatus> -->
 <h1 class="todo-board-title">Task List</h1>
 
 <div id="createModal-container"></div>
@@ -96,13 +81,9 @@
   }
   .todo-list {
     width: 100%;
-    /* height: 0; */
     padding: 0 0 50px 0;
     overflow: hidden;
   }
-  /* .todo-list:last-child{
-  margin-bottom: 100px;
-} */
   .todo-item {
     background-color: #9abcff;
     list-style: none;
@@ -171,12 +152,10 @@
   }
   .dragging .add-area {
     display: flex;
-    /* その他のスタイル */
   }
   .open-todo-list-upcoming,
   .open-todo-list-inProgress,
   .open-todo-list-done {
-    /* display: block; */
     height: 100%;
   }
   #todo-container,
@@ -221,14 +200,9 @@
       gap: 7px;
       margin-bottom: 30px;
     }
-    .todo-status {
-      /* width: 30%; */
-    }
     .todo-list {
-      /* display: none; */
       height: auto;
       overflow: hidden;
-      /* transition: height .3s ease; */
     }
     #todo-container,
     #in-progress-container,
@@ -270,7 +244,7 @@
           img {
             width: 25px;
             height: 25px;
-            transform: translateX(-5px)
+            transform: translateX(-5px);
           }
 
           &:hover {
@@ -364,6 +338,12 @@
           height: 30px;
           background-color: #9abcff;
           border-radius: 50%;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #6092f6;
+            transition: all 0.3s;
+          }
         }
 
         .modal-input {
@@ -409,6 +389,12 @@
             color: #fff;
             font-size: 20px;
             right: 4rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #6092f6;
+              transition: all 0.3s;
+            }
           }
         }
       }
