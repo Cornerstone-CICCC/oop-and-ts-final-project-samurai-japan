@@ -96,7 +96,7 @@ export default class Todo {
               <label for="title-input">Title</label></br>
               <input type="text" name="title" id="title-input" required value="${todoToEdit?.title}" maxlength="10" /></br>
               <label for="description-input">Description</label></br>
-              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="20" required />${todoToEdit?.description}</textarea></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="100" required />${todoToEdit?.description}</textarea></br>
               <button id="todo-edit-btn">Update</button>
             </div>
           </div>
@@ -209,7 +209,7 @@ export default class Todo {
               <label for="title-input">Title</label></br>
               <input type="text" name="title" id="title-input" maxlength="10" required /></br>
               <label for="description-input">Description</label></br>
-              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="20" required /></textarea></br>
+              <textarea type="text" name="description" id="description-input" rows="5" cols="40" maxlength="100" required /></textarea></br>
               <button id="todo-add-btn" class="${title}">Add</button>
             </div>
           </div>
